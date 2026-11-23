@@ -19,13 +19,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
 
-      # The setup-android action currently requests the obsolete "tools"
-      # package by default. Use the runner's installed command-line tools.
       - name: Install Android SDK components
         shell: bash
         run: |
@@ -33,10 +31,14 @@ jobs:
           SDKMANAGER="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
           if [ ! -x "$SDKMANAGER" ]; then
             echo "sdkmanager not found at $SDKMANAGER"
-            find "$SDK_ROOT/cmdline-tools" -maxdepth 3 -name sdkmanager -type f || true
+            find "$SDK_ROOT/cmdline-tools" -maxdepth 4 -name sdkmanager -type f || true
             exit 1
           fi
-          yes | "$SDKMANAGER" --licenses
+
+          # Feed a finite number of affirmative responses. Avoid a yes(1)
+          # pipeline, which exits with SIGPIPE after sdkmanager stops reading.
+          LICENSE_INPUT="$(printf 'y\n%.0s' {1..100})"
+          "$SDKMANAGER" --licenses <<< "$LICENSE_INPUT"
           "$SDKMANAGER" --install "platform-tools" "platforms;android-37"
 
       - name: Set up Gradle
