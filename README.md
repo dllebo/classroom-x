@@ -41,3 +41,8 @@ Open in a compatible Android Studio installation with JDK 17 and the Android SDK
 ## Security
 
 Never commit API keys, OAuth client secrets, access tokens, service-account keys, or real student data. Keep AI provider keys on a backend. Start with read-only OAuth scopes and request write scopes only when the user enables the relevant feature.
+
+
+## Build status
+
+The project is an early Android scaffold. See [BUILDING.md](docs/BUILDING.md) for the GitHub Actions debug APK build and local build instructions. The current screens still use demonstration data; Google authentication and live Classroom API integration are future milestones.
