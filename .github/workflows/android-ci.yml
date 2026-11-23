@@ -23,6 +23,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+          cache: gradle
 
       - name: Install Android SDK components
         shell: bash
@@ -31,27 +32,23 @@ jobs:
           SDKMANAGER="$SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
           if [ ! -x "$SDKMANAGER" ]; then
             echo "sdkmanager not found at $SDKMANAGER"
-            find "$SDK_ROOT/cmdline-tools" -maxdepth 4 -name sdkmanager -type f || true
             exit 1
           fi
 
-          # Feed a finite number of affirmative responses. Avoid a yes(1)
-          # pipeline, which exits with SIGPIPE after sdkmanager stops reading.
-          LICENSE_INPUT="$(printf 'y\n%.0s' {1..100})"
-          "$SDKMANAGER" --licenses <<< "$LICENSE_INPUT"
-          "$SDKMANAGER" --install "platform-tools" "platforms;android-36"
+          # Accept SDK licenses without failing the step on yes(1)'s expected SIGPIPE.
+          set +o pipefail
+          yes | "$SDKMANAGER" --licenses
+          set -o pipefail
+          "$SDKMANAGER" --install "platform-tools" "platforms;android-37"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.6.0'
-
-      # Bootstrap the wrapper until the generated wrapper files are committed.
-      - name: Generate Gradle Wrapper
-        run: gradle wrapper --gradle-version 9.6.0
+          cache-read-only: false
 
       - name: Assemble debug APK
-        run: ./gradlew --no-daemon :app:assembleDebug
+        run: gradle :app:assembleDebug --build-cache --configuration-cache
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
