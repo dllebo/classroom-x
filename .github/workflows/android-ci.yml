@@ -39,7 +39,7 @@ jobs:
           # pipeline, which exits with SIGPIPE after sdkmanager stops reading.
           LICENSE_INPUT="$(printf 'y\n%.0s' {1..100})"
           "$SDKMANAGER" --licenses <<< "$LICENSE_INPUT"
-          "$SDKMANAGER" --install "platform-tools" "platforms;android-37"
+          "$SDKMANAGER" --install "platform-tools" "platforms;android-36"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
