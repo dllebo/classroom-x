@@ -190,7 +190,7 @@ private fun ClassroomApp() {
                 } else if (!settings) {
                     NavigationBar(containerColor = Panel) {
                         val labels = listOf("Курсы", "Задания", "Уведомления")
-                        val icons = listOf(Icons.Rounded.Class, Icons.AutoMirrored.Rounded.Assignment, Icons.Rounded.Notifications)
+                        val icons = listOf(Icons.Rounded.Class, Icons.Rounded.Assignment, Icons.Rounded.Notifications)
                         val current = if (page in 0..2) page else 0
                         labels.forEachIndexed { i, label ->
                             NavigationBarItem(selected = current == i, onClick = { page = i; course = null },
