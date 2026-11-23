@@ -52,6 +52,7 @@ private fun ClassroomTheme(content: @Composable () -> Unit) {
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ClassroomRoot(activity: MainActivity) {
     var accessToken by remember { mutableStateOf<String?>(null) }
