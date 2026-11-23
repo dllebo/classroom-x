@@ -1,51 +1,43 @@
 # Classroom X
 
-An independent Android companion client for Google Classroom, built with Kotlin and Jetpack Compose.
+An independent Android companion client for Google Classroom, built with Kotlin, Jetpack Compose, and Material 3.
 
-> Classroom X is an unofficial third-party project and is not affiliated with Google.
+> Classroom X is an unofficial third-party project and is not affiliated with Google. It uses original UI and supported public integrations; it does not copy Google's proprietary source code or private app internals.
+
+## Product direction
+
+The goal is to cover the main student and teacher workflows familiar from Google Classroom: courses, stream, classwork, topics, assignments, submissions, feedback, grades, people, planner, notifications, and settings. Exact parity is not possible for every first-party feature because the public Classroom API does not expose every feature and some capabilities require separate Google APIs, Workspace editions, or role-specific permissions.
+
+See:
+- [Feature parity specification](docs/FEATURE_PARITY.md)
+- [Google Classroom API capability notes](docs/GOOGLE_CLASSROOM_API.md)
 
 ## Current status
 
-**Scaffold / UI prototype.** The first milestone establishes the Android app structure and a local dashboard preview. Google OAuth, Classroom API integration, AI providers, notifications, and persistence are not connected yet.
+**Early UI prototype.** The repository currently contains a starter dashboard and Android Compose scaffold. No Google account sign-in, live Classroom data, assignment submission, notifications backend, or AI provider is connected yet.
 
-## Tech stack
+## Stack
 
 - Kotlin
-- Jetpack Compose
-- Material 3
-- MVVM-oriented feature structure
-- Minimum Android version: API 26 (Android 8.0)
-- Compile / target SDK: API 37
-
-## Project structure
-
-```
-app/
-  src/main/
-    java/com/classroomx/
-      MainActivity.kt
-      core/
-      features/
-    AndroidManifest.xml
-gradle/
-  libs.versions.toml
-```
+- Jetpack Compose + Material 3
+- MVVM / repository-oriented architecture
+- Min Android API 26
+- JDK 17
 
 ## Build
 
-Open this repository in a compatible Android Studio version with JDK 17 and Android SDK 37 installed. Generate a Gradle wrapper if one is not present, then sync and build the `app` configuration.
+Open in a compatible Android Studio installation with JDK 17 and the Android SDK installed. A Gradle wrapper still needs to be added/generated before command-line builds are reproducible.
 
 ## Roadmap
 
-- [x] Initial Android / Compose scaffold
-- [x] First local dashboard prototype
-- [ ] Navigation and settings
-- [ ] X Smoothness (adaptive display mode request)
-- [ ] Google OAuth and Classroom API (read-only first)
-- [ ] Local cache and notifications
-- [ ] AI provider gateway
-- [ ] Security and privacy review
+1. Foundation: navigation, design system, preview/demo data, state handling.
+2. Read-only Classroom API: courses, classwork, stream, topics, submissions and grades.
+3. Student workflows: assignment details, turn-in/reclaim and attachments where supported.
+4. Teacher workflows: authoring and grading with explicit role checks and write scopes.
+5. Planner, local notifications, then push / Drive / Calendar integrations.
+6. X AI backend, privacy controls and provider routing.
+7. Accessibility, performance, X Smoothness and later Liquid Glass experiments.
 
-## Privacy and security
+## Security
 
-Never commit API keys, OAuth client secrets, access tokens, or real student data. AI requests should go through a backend rather than embedding provider secrets in the APK.
+Never commit API keys, OAuth client secrets, access tokens, service-account keys, or real student data. Keep AI provider keys on a backend. Start with read-only OAuth scopes and request write scopes only when the user enables the relevant feature.
