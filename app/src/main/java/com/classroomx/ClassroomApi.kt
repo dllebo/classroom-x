@@ -40,7 +40,7 @@ data class ClassroomStreamItem(
 
 class ClassroomApi(private val accessToken: String) {
     suspend fun courses(): List<ClassroomCourse> = withContext(Dispatchers.IO) {
-        list("courses", "courses", "courseState=ACTIVE&pageSize=100").map { item ->
+        list("courses", "courses", "courseStates=ACTIVE&pageSize=100").map { item ->
             ClassroomCourse(
                 id = item.optString("id"),
                 name = item.optString("name", "Без названия"),
