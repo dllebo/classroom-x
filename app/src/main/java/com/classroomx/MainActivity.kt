@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.Assignment
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -183,7 +182,7 @@ private fun ClassroomApp() {
                         listOf("Лента", "Задания", "Пользователи").forEachIndexed { i, label ->
                             NavigationBarItem(
                                 selected = courseTab == i, onClick = { courseTab = i },
-                                icon = { Icon(if (i == 0) Icons.Rounded.Forum else if (i == 1) Icons.AutoMirrored.Rounded.Assignment else Icons.Rounded.People, contentDescription = label) },
+                                icon = { Icon(if (i == 0) Icons.Rounded.Forum else if (i == 1) Icons.Rounded.Checklist else Icons.Rounded.People, contentDescription = label) },
                                 label = { Text(label) }
                             )
                         }
